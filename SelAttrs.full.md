@@ -1,0 +1,84 @@
+- **1st Flr SF:** algunos outliers (a partir de ~2000) pero gráfico muestra relación lineal.
+- **2nd Flr SF:** muchos valores 0 Q1 y Q2 son 0 (no tendrán 2ndo piso) pocos outliers a partir de ~1700. 
+- 35sn Porch: todos los cuartiles son 0, el resto detectados como outliers.
+- **Bedroom AbvGr:** valores discretos. Ninguna instancia 7, pocas posibles outliers en 0, 5, 6 y 8.
+- **Bsmt Full Bath:** Valores discretos. outliers en 3.
+- Bsmt Half Bath: todos los cuartiles son 0, el resto outliers.
+- **Bsmt Unf SF**: unos cuantos outliers sobre ~1700. nube de puntos con poca relación lineal.
+- **BmstFin SF 1**: *OUTLIERS*. relación con SalePrice.
+- BmstFin SF 2: Todos los Qs son 0
+- Enclosed Porch: Todos los Qs son 0
+- **Fireplaces:** Valores discretos. 3 y 4 posilbes outliers.
+- **Full Bath:** Valores discretos. 4 posible outlier.
+- **Garage Area:** Algunos 0s y posibles outliers. relación con SalePrice.
+- **Garage Cars:** valores discretos. no exactamente igual a Garage Area. Outliers en 4 y 5.
+- **Garage Yr Blt**: *valor incorrecto* claro en 2200 (esta variable indica año). Sin dicha instancia cierta relación con SalePrice.
+- **Gr Liv Area**: Clara relación con SalePrice. Algunos posibles valores incorrectos/outliers (valores por encima de 4500 con precios de venta bajos).
+- **Half Bath**: Valores discretos. 
+- Kitchen AbvGr: Valores discretos. Todos los quartiles son 1.
+- Lot Area: Valores con muchos posibles outliers.
+- **Lot Frontage:** Varios posibles outliers.
+- Low Qual Fin SF: Todos los cuartiles son 0.
+- **Mas Vnr Area**: Muchos 0s.
+- Misc Val: Todos los cuartiles son 0.
+- Mo Sold: Valores discretos. No parece tener mucha relación con SalePrice.
+- **Open Porch SF**: Varios posibles outliers. 
+- **Overall Cond**: Valores discretos. Posilbes outliers fuera de 4, 5, 6 y 7. Relación con SalePrice.
+- **Overall Qual**: Valores discretos. Clara relación con SalePrice.
+- Pool Area: todos los cuartiles son 0.
+- ScreenPorch: todos los cuartiles son 0.
+- **Total Bsmt SF**: *OUTLIERS* por encima de 5000 (con saleprice bajo).
+- **TotRms AbvGrd**: Valores discretos.
+- **Wood Deck SF**: *OUTLIER* en >1400. Muchos 0s.
+- **Year Built**: Algunos posibles outliers con años bajos y precios altos.
+- **Year Remod/Add**: Algunos posibles valores incorrectos en 1950.
+- Yr Sold: Valores discretos. No parece tener relación con SalePrice.
+
+- Alley: Mayoría de valores Unknown (sin acceso a alley).
+- Bldg Type: mayoría de valores 1Fam
+- **Bsmt Cond:** la mayoría valores TA. 80 Unknowns. Probablemente casas sin sótano.
+- **Bmst Exposure:** Mejor distribuido. 83 Uknowns.
+- **Bmst Qual**: Mejor distribuido. 80 Unknowns.
+- **BmstFin Type 1**: Mayoría GLQ y Unf. 
+- BmstFin Type 2: Gran mayoria Unf.
+- **Central Air**
+-Mejor distribuido. 80 Unknowns.
+- **BmstFin Type 1**: Mayoría GLQ y Unf. 
+- BmstFin Type 2: Gran mayoria Unf.
+- **Central Air:** mayoría Y, N tiene precios mucho menores.
+- Condition 1: Mayoría normal, algunos Feedr.
+- Condition 2: Mayoría normal.
+- Electrical: Mayoría SBrkr algunos FuseA. Precios mucho menores en FuseA
+- Exter Cond: Mayoría TA, algunos Gd.
+- Exterior 1st: Distribuido entre VinylSd, Wd Sdng, MetalSd, Plywood y HdBoard. Conversión a esos 5 atributos + OTRO. Tras conversión no parece cambiar mucho el precio.
+- Exterior 2nd: Distribuido entre VinylSd, Wd Sdng, MetalSd, Plywood y HdBoard. Conversión a esos 5 atributos + OTRO. Tras conversión no parece cambiar mucho el precio.
+- **Exter Qual**: Mayoría Gd y TA, diferencias en precios.
+- Fence: Mayoría UNKNOWN, no parece afectar al precio el resto.
+- Fireplace Qu: **Mayoría UNKNOWN**, Gd y TA.
+- **Foundation:** Mayoría CBlock y PConc.
+- Functional: Casi todo typical.
+- Garage Cond: Casi todo TA.
+- **Garage Finish**: Mejor distribuido. Diferencias de price.
+- Garage Qual: Mayoría TA.
+- **Garage Type:** Mayoría Attchd y Detchd. Distribuciones algo distintas.
+- Heating: Mayoría GasA.
+- **Heating QC**: Mejor distribuido.
+- House Style: Distribuido casi totalmente entre 1Story, 1.5Fin y 2Story. Poca diferencia entre 1Story y 2Story, pero precios algo más bajos en 1.5Fin.
+- **Kitchen Qual**: Casi todo TA y Gd. Distribuciones algo distntas.
+- Land Contour: casi todo Lvl
+- Land Slope: Casi todo Gtl.
+- Lot Config: Casi todo inside y Corner. Poca diferencia entre ambas.
+- **Lot Shape**: Unir en dos valores, Reg o IR, con distribuciones algo distintas.
+- Mas Vnr Type: El tipo no parece influir demasiado, y si existe o no Masonry veneer viene dado por el atributo continuo Mas Vnr Area.
+- Misc Feature: Mayoría UNKNOWN.
+- *MS SubClass: Muchos valores distintos. No se puede pasar a continuo porque son códigos. Probablemente eliminar*
+- **MS Zoning:** Mayoría RL o RM, con alguno FV. Distribuciones distintas. Juntar A, C, I y RH en un atributo debido a su poca ocurrencia y distribución no disimilar.
+- Neighborhood: Muchos valores. 
+- **Paved Drive**: Mayoría Y pero distribuciones distintas entre Y y N/P.
+- Pool QC: Casi en exclusiva UNKNOWN.
+- Roof Matl: Casi en exclusiva CompShg.
+- **Roof Style**: Distribuido en Gable, Hip y Other con diferencia en precio.
+- **Sale Condition**: Distribuido en Normal, Partial, Abnorml y Other con diferencia en precio.
+- **Sale Type**: Se podría convertir en el atributo New según si la casa es recién construida y vendida o no, ya que es donde se encuentra más diferencia en distribución de precios.
+- Street: Casi exclusivamente Pave.
+- Utilities: Casi exclusivamente AllPub
