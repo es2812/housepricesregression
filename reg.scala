@@ -9,11 +9,12 @@
 
 import org.apache.spark.sql.DataFrame
 import org.apache.spark.sql.functions.udf
-import org.apache.spark.ml.feature.{OneHotEncoderEstimator, VectorAssembler, StringIndexer}
+import org.apache.spark.ml.feature.{OneHotEncoderEstimator, VectorAssembler, StringIndexer, StringIndexerModel}
 import org.apache.spark.ml.Pipeline
 import org.apache.spark.ml.regression.{LinearRegression, LinearRegressionModel}
 
 val PATH = "data/AmesHousing_modified.csv"
+val SEED = 961228
 
 /*                      
  *                      LECTURA DE DATOS
@@ -92,7 +93,7 @@ val modelTransformed = pipe.fit(transformed)
 val dataTransformed = modelTransformed.transform(transformed)
 
 //Separamos datos en train y test
-val split = dataTransformed.randomSplit(Array(0.66,0.34))
+val split = dataTransformed.randomSplit(Array(0.66,0.34), SEED)
 val train = split(0)
 val test = split(1)
 
@@ -100,11 +101,36 @@ val test = split(1)
 val lr = new LinearRegression()
 lr.setFeaturesCol("features")
 lr.setLabelCol("SalePrice")
-lr.setRegParam(0.3)
-lr.setElasticNetParam(0.8)
+lr.setElasticNetParam(1)
+
+/*
+ *                VALIDACIÓN CRUZADA
+ *      Utilizada para entrenar regParam de LinearRegression
+ *
+ */
+
+import org.apache.spark.ml.tuning.{CrossValidator, ParamGridBuilder}
+import org.apache.spark.ml.evaluation.RegressionEvaluator
+
+val eval = new RegressionEvaluator()
+eval.setLabelCol("SalePrice")
+eval.setPredictionCol("prediction")
+eval.setMetricName("mse")
+
+val grid = new ParamGridBuilder().addGrid(lr.regParam,Array(0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1)).build()
+
+val cv = new CrossValidator()
+cv.setSeed(SEED)
+cv.setNumFolds(2)
+cv.setEvaluator(eval)
+cv.setEstimator(lr)
+cv.setEstimatorParamMaps(grid)
 
 //fit con el set de entrenamiento
-val lm = lr.fit(train)
+val cvModel = cv.fit(train)
+
+//obtenemos el mejor modelo
+val lm = cvModel.bestModel.asInstanceOf[LinearRegressionModel]
 
 println(s"RegParam: ${lm.getRegParam}")
 println(s"ElasticNetParam: ${lm.getElasticNetParam}")
@@ -116,7 +142,7 @@ println(s"Guardando coeficientes:")
 // O lo que es lo mismo, tantos coeficientes como tamaño tenga el vector correspondiente
 // a la variable
 
-var coeficientes:Array[(String,String,Double)] = Array()
+var coeficientes:Array[(String,String,Double)] = Array(("Intercept","",lm.intercept))
 var numCoeficientes: Int = 1
 import org.apache.spark.ml.linalg.SparseVector
 
@@ -145,7 +171,7 @@ for((f,fi) <- feature_cols.zipWithIndex){
 }
 
 val coeficientesDF = sc.parallelize(coeficientes).toDF("Variable","Valor","Coeficiente") //con
-coeficientesDF.write.csv("./coefs/1")
+coeficientesDF.write.csv("./coefs/2")
 
 //Resto de métricas:
 val sum = lm.summary
@@ -157,10 +183,6 @@ println(s"R2 ajustado: ${sum.r2adj}")
 
 val residuals = lm.transform(test).select("SalePrice","prediction")
 
-import org.apache.spark.ml.evaluation.RegressionEvaluator
-val eval = new RegressionEvaluator()
-eval.setLabelCol("SalePrice")
-eval.setPredictionCol("prediction")
 
 println("SUMMARY TEST")
 eval.setMetricName("mse")
