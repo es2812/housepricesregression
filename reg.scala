@@ -101,7 +101,6 @@ val test = split(1)
 val lr = new LinearRegression()
 lr.setFeaturesCol("features")
 lr.setLabelCol("SalePrice")
-lr.setElasticNetParam(1)
 
 /*
  *                VALIDACIÓN CRUZADA
@@ -117,7 +116,7 @@ eval.setLabelCol("SalePrice")
 eval.setPredictionCol("prediction")
 eval.setMetricName("mse")
 
-val grid = new ParamGridBuilder().addGrid(lr.regParam,Array(0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1)).build()
+val grid = new ParamGridBuilder().addGrid(lr.regParam,Array(0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1)).addGrid(lr.elasticNetParam,Array(0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1)).build()
 
 val cv = new CrossValidator()
 cv.setSeed(SEED)
@@ -171,7 +170,7 @@ for((f,fi) <- feature_cols.zipWithIndex){
 }
 
 val coeficientesDF = sc.parallelize(coeficientes).toDF("Variable","Valor","Coeficiente") //con
-coeficientesDF.write.csv("./coefs/2")
+coeficientesDF.write.csv("./coefs/3")
 
 //Resto de métricas:
 val sum = lm.summary
