@@ -9,8 +9,11 @@
 
 import org.apache.spark.sql.DataFrame
 import org.apache.spark.sql.functions.udf
+import org.apache.spark.ml.feature.{OneHotEncoderEstimator, VectorAssembler, StringIndexer}
+import org.apache.spark.ml.Pipeline
+import org.apache.spark.ml.regression.{LinearRegression, LinearRegressionModel}
 
-val PATH = "data/AmesHousing.csv"
+val PATH = "data/AmesHousing_modified.csv"
 
 /*                      
  *                      LECTURA DE DATOS
@@ -25,14 +28,14 @@ val df = spark.read.format("csv").option("header","true").option("inferSchema","
  *
  */
 
-def selectAttributes(df:DataFrame, attrs:Array[String]): DataFrame = {
+def deleteAttributes(df:DataFrame, attrs:Array[String]): DataFrame = {
     for(a<-attrs){
       if(!(df.columns contains a)){
         print(s"El DataFrame no contiene el atributo ${a}\n")
       }
     }
 
-    val drops = df.columns.diff(attrs)
+    val drops = attrs
     var newdf = df
     for(d<-drops){
         newdf = newdf.drop(d)   
@@ -40,104 +43,127 @@ def selectAttributes(df:DataFrame, attrs:Array[String]): DataFrame = {
     newdf
 }
 
+val TODELETE = Array("Order", "PID", "Condition 2", "Heating", "Pool QC", "Roof Matl", "Street", "Utilities", "Lot Frontage", "Garage Yr Blt")
+val selected = deleteAttributes(df,TODELETE)
 
-val NUMATTR = Array("1st Flr SF", "2nd Flr SF", "Bedroom AbvGr", "Bsmt Full Bath", "Bsmt Unf SF", "BsmtFin SF 1", "Fireplaces", "Full Bath", "Garage Area", "Garage Cars", "Garage Yr Blt", "Gr Liv Area", "Half Bath", "Lot Frontage", "Mas Vnr Area", "Open Porch SF", "Overall Cond", "Overall Qual", "Total Bsmt SF", "TotRms AbvGrd", "Wood Deck SF", "Year Built", "Year Remod/Add")
-val CATATTR = Array("Bsmt Cond", "Bsmt Exposure", "Bsmt Qual", "BsmtFin Type 1", "Central Air", "Electrical", "Exter Qual", "Fireplace Qu", "Foundation", "Garage Finish", "Garage Type", "Heating QC", "Kitchen Qual", "Lot Shape", "MS Zoning", "Paved Drive", "Roof Style", "Sale Condition", "Sale Type")
-val label = Array("SalePrice")
-val ATTR = NUMATTR++CATATTR++label
+val NUMATTR = Array("1st Flr SF", "2nd Flr SF", "3Ssn Porch", "Bedroom AbvGr", "Bsmt Full Bath", "Bsmt Half Bath", "Bsmt Unf SF", "BsmtFin SF 1", "BsmtFin SF 2",
+"Enclosed Porch", "Fireplaces", "Full Bath", "Garage Area", "Garage Cars", "Gr Liv Area", "Half Bath", "Kitchen AbvGr", "Lot Area", "Low Qual Fin SF", 
+"Mas Vnr Area", "Misc Val", "Open Porch SF", "Overall Cond", "Overall Qual", "Pool Area", "Screen Porch", "Total Bsmt SF", "TotRms AbvGrd", "Wood Deck SF", 
+"Year Built", "Year Remod/Add")
+val CATATTR = selected.columns.diff(NUMATTR).diff(Array("SalePrice"))
 
-val dataDF = selectAttributes(df,ATTR)
-
-/*      
- *          ELIMINACIÓN DE OUTLIERS
- *
- */
-
-//Garage Yr Blt contiene una instancia con valor 2207, claramente incorrecta (representa un año en el que se ha construido el garaje)
-//Asumimos que cualquier año mayor que 2019 (año actual) es incorrecto
-
-val filteredDF = dataDF.filter($"Garage Yr Blt" < 2020)
-
-/*
- *        CONVERSIÓN DE NULLS
- *          En el caso de las variables categóricas convertimos valores null en "UNKNOWN"
- */
-
-val nonaDF = filteredDF.na.fill("UNKNOWN",CATATTR)
 
 /*
  *        CONVERSIÓN DE ATRIBUTOS
+ *    Los años se pasan al número de años que han pasado en el momento de la venta
  *
  */
 
-//Creamos funciones que mappean valores para los atributos a convertir
-def electricalMap(s:String):String = {
-  if(s=="SBrkr"||s=="UNKNOWN")
-    s
-  else
-    "Other"
-}
-
-def lotshapeMap(s:String):String = {
-  if(s=="Reg"||s=="UNKNOWN")
-    s
-  else
-    "IR"
-}
-
-def mszoningMap(s:String):String = {
-  if(s=="RL"||s=="RM"||s=="FV"||s=="UNKNOWN")
-    s
-  else
-    "Other"
-}
-
-def paveddriveMap(s:String):String = {
-  if(s=="Y"||s=="UNKNOWN")
-    s
-  else
-    "N/P"
-}
-
-def roofstyleMap(s:String):String = {
-  if(s=="Gable"||s=="Hip"||s=="UNKNOWN")
-    s
-  else
-    "Other"
-}
-
-def saleconditionMap(s:String):String = {
-  if(s=="Normal"||s=="Partial"||s=="Abnorml"||s=="UNKNOWN")
-    s
-  else
-    "Other"
-}
-
-def saletypeMap(s:String):String = {
-  if(s=="New"||s=="UNKNOWN")
-    s
-  else
-    "Not New"
-}
-
-//La función udf (user defined function) transforma los mapeados que toman y devuelven una String
-//en funciones que trabajan con Columnas de DataFrame, convirtiendolos básicamente en Transformers
-val map1 = udf(electricalMap _)
-val map2 = udf(lotshapeMap _)
-val map3 = udf(mszoningMap _)
-val map4 = udf(paveddriveMap _)
-val map5 = udf(roofstyleMap _)
-val map6 = udf(saleconditionMap _)
-val map7 = udf(saletypeMap _)
-
-//Creamos nuevas columnas con las transformaciones
-val transDF = filteredDF.withColumn("Electrical_",map1('Electrical)).withColumn("Lot Shape_",map2($"Lot Shape")).withColumn("MS Zoning_",map3($"MS Zoning")).withColumn("Paved Drive_",map4($"Paved Drive")).withColumn("Roof Style_",map5($"Roof Style")).withColumn("Sale Condition_",map6($"Sale Condition")).withColumn("Sale Type_",map7($"Sale Type"))
-
-//Eliminamos las columnas antiguas y renombramos las nuevas por comodidad
-val DF = transDF.drop("Electrical").withColumnRenamed("Electrical_","Electrical").drop("Lot Shape").withColumnRenamed("Lot Shape_","Lot Shape").drop("MS Zoning").withColumnRenamed("MS Zoning_","MS Zoning").drop("Paved Drive").withColumnRenamed("Paved Drive_", "Paved Drive").drop("Roof Style").withColumnRenamed("Roof Style_","Roof Style").drop("Sale Condition").withColumnRenamed("Sale Condition_","Sale Condition").drop("Sale Type").withColumnRenamed("Sale Type_","Sale Type")
+val transformed = selected.withColumn("Year Built_",$"Yr Sold" - $"Year Built").drop("Year Built").withColumnRenamed("Year Built_", "Year Built").
+withColumn("Year Remod/Add_", $"Yr Sold" - $"Year Remod/Add").drop("Year Remod/Add").withColumnRenamed("Year Remod/Add_","Year Remod/Add")
 
 /*
- *        
+ *    PREPARACIÓN DE PIPELINE 
  *
  */
 
+var indexers:List[StringIndexer] = List()
+
+for(col<-CATATTR){
+  var si = new StringIndexer()
+  si.setInputCol(col)
+  si.setOutputCol(col+"_index")
+  indexers = indexers:::List(si)
+}
+
+var input_ohe = CATATTR.map(x=> x+"_index")
+val output_ohe = CATATTR.map(x=> x+"_ohe")
+
+val ohe = new OneHotEncoderEstimator().setInputCols(input_ohe).setOutputCols(output_ohe)
+
+val feature_cols = output_ohe++NUMATTR
+val va = new VectorAssembler().setInputCols(feature_cols).setOutputCol("features")
+
+
+//La pipeline de transformación se utiliza sobre la totalidad de los datos
+val pipe = new Pipeline()
+pipe.setStages(indexers.toArray ++ Array(ohe,va))
+val modelTransformed = pipe.fit(transformed)
+val dataTransformed = modelTransformed.transform(transformed)
+
+//Separamos datos en train y test
+val split = dataTransformed.randomSplit(Array(0.66,0.34))
+val train = split(0)
+val test = split(1)
+
+//Modelo de regresión lineal:
+val lr = new LinearRegression()
+lr.setFeaturesCol("features")
+lr.setLabelCol("SalePrice")
+lr.setRegParam(0.3)
+lr.setElasticNetParam(0.8)
+
+//fit con el set de entrenamiento
+val lm = lr.fit(train)
+
+println(s"RegParam: ${lm.getRegParam}")
+println(s"ElasticNetParam: ${lm.getElasticNetParam}")
+println(s"Intercept: ${lm.intercept}")
+
+println(s"Guardando coeficientes:")
+// Preparamos los coeficientes. Hay que tener en cuenta que para cada variable
+// convertida con OHE se le asignan n-1 coeficientes
+// O lo que es lo mismo, tantos coeficientes como tamaño tenga el vector correspondiente
+// a la variable
+
+var coeficientes:Array[(String,String,Double)] = Array()
+var numCoeficientes: Int = 1
+import org.apache.spark.ml.linalg.SparseVector
+
+var j = 0
+for((f,fi) <- feature_cols.zipWithIndex){
+  if(output_ohe contains f){ //si el nombre de la columna se encuentra en el output del OHE es categórica
+    var y = dataTransformed.select(f).head
+    numCoeficientes = y(0).asInstanceOf[SparseVector].size //el  tamaño del vector es el número de coeficientes asignados
+
+    //para obtener el valor de la columna correspondiente a cada posición del array
+    //utilizamos los StringIndexer de la Pipeline entrenada. El orden es el dado por el atributo labels 
+    var labels = modelTransformed.stages(fi).asInstanceOf[StringIndexerModel].labels
+
+    //asignamos los coeficientes
+    for(i<- 0 to numCoeficientes){
+      coeficientes = coeficientes ++ Array((f,labels(i),lm.coefficients(j+i))) 
+    }
+    //actualizamos el indexador del array de coeficientes
+    j = j+numCoeficientes
+  }
+  else{
+    //si es numérica sólo le corresponde un coeficiente
+    coeficientes = coeficientes ++ Array((f,"",lm.coefficients(j)))
+    j = j+1
+  }
+}
+
+val coeficientesDF = sc.parallelize(coeficientes).toDF("Variable","Valor","Coeficiente") //con
+coeficientesDF.write.csv("./coefs/1")
+
+//Resto de métricas:
+val sum = lm.summary
+println("SUMMARY TRAINING")
+println(s"MSE: ${sum.meanSquaredError}")
+println(s"RMSE: ${sum.rootMeanSquaredError}")
+println(s"R2: ${sum.r2}")
+println(s"R2 ajustado: ${sum.r2adj}")
+
+val residuals = lm.transform(test).select("SalePrice","prediction")
+
+import org.apache.spark.ml.evaluation.RegressionEvaluator
+val eval = new RegressionEvaluator()
+eval.setLabelCol("SalePrice")
+eval.setPredictionCol("prediction")
+
+println("SUMMARY TEST")
+eval.setMetricName("mse")
+print(s"MSE: ${eval.evaluate(residuals)}")
+eval.setMetricName("r2")
+print(s"R2: ${eval.evaluate(residuals)}")
