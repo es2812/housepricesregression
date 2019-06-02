@@ -150,7 +150,7 @@
 		- R2 ajustado: 0.9260923965122994
 	- SUMMARY TEST
 		- MSE: 1.2077024487291727E9
-		- R2: 0.8165907028846493
+		- **R2: 0.8165907028846493**
 
 11. ...
 	- regParam: 1.4
@@ -255,5 +255,51 @@
 		- MSE: 1.5296361336076756E9
 		- R2: 0.7676998267226833   
 
-TODO. Programación de forward selection:
-	- No regularización.
+---
+
+
+1. Forward selection simple.
+	1. -7.612288956959645E-7 -> 0.6483352003571359            
+		Elegida Overall Qual
+	2. 0.6483352003571359 -> 0.7256410308057214               
+		Elegida Neighborhood
+	3. 0.7256410308057214 -> 0.7778021760462034               
+		Elegida Gr Liv Area  
+	4. 0.7778021760462034 -> 0.7969875775286029               
+		Elegida MS SubClass
+	5. 0.7978547795204888R2 0.7969875775286029 -> 0.8127813481863242               
+		Elegida Bsmt Full Bath 
+	6. 0.8127813481863242 -> 0.8252483582477492               
+		Elegida Exter Qual
+	7. 0.8252483582477492 -> 0.8312800177691797               
+		Elegida Bsmt Exposure
+	8. 0.8312800177691797 -> 0.8362524715298434               
+		Elegida Overall Cond
+	9. 0.8362524715298434 -> 0.8412226821523066               
+		Elegida Garage Cars
+	10. 0.8412226821523066 -> 0.8457554114251817               
+		Elegida Bsmt Qual
+	11. 0.8457554114251817 -> 0.8481860230942235               
+		Elegida Fireplaces
+	12. 0.8481860230942235 -> 0.8505401066563936               
+		Elegida Land Contour
+	13. 0.8505401066563936 -> 0.8525964025953936               
+		Elegida Exterior 1st
+	14. 0.8525964025953936 -> 0.8547715382319983               
+		Elegida Kitchen Qual
+	15. 0.8547715382319983 -> 0.8569862677279183                
+		Elegida Garage Qual
+	16. 0.8569862677279183 -> 0.8588145700415541               
+		Elegida Screen Porch
+	17. 0.8588145700415541 -> 0.8599550994507006               
+		Elegida Year Built
+	18. 0.8599550994507006 -> 0.8610100934777516               
+		Elegida Garage Cond
+	19. 0.8610100934777516 -> 0.8624757370855596               
+		Elegida Condition 1
+	20. 0.8624757370855596 -> 0.8635196161004577               
+		Elegida Bsmt Unf SF
+	
+	R2 test final: 0.863. R2 training: 0.9050394329070544. R2 ajustado training: 0.899614619590042
+
+2. 
