@@ -15,6 +15,8 @@ import org.apache.spark.ml.regression.{LinearRegression, LinearRegressionModel}
 
 val PATH = "data/AmesHousing_modified.csv"
 val SEED = 961228
+val REGPARAM = 0
+val EXPNUM = "18"
 
 /*                      
  *                      LECTURA DE DATOS
@@ -101,6 +103,8 @@ val test = split(1)
 val lr = new LinearRegression()
 lr.setFeaturesCol("features")
 lr.setLabelCol("SalePrice")
+lr.setElasticNetParam(1)
+lr.setRegParam(REGPARAM)
 
 /*
  *                VALIDACIÓN CRUZADA
@@ -115,21 +119,22 @@ val eval = new RegressionEvaluator()
 eval.setLabelCol("SalePrice")
 eval.setPredictionCol("prediction")
 eval.setMetricName("mse")
-
+/*
 val grid = new ParamGridBuilder().addGrid(lr.regParam,Array(0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1)).addGrid(lr.elasticNetParam,Array(0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1)).build()
 
 val cv = new CrossValidator()
 cv.setSeed(SEED)
 cv.setNumFolds(2)
 cv.setEvaluator(eval)
-cv.setEstimator(lr)
-cv.setEstimatorParamMaps(grid)
+cv.setEstimator(lr)*/
+//cv.setEstimatorParamMaps(grid)
 
 //fit con el set de entrenamiento
-val cvModel = cv.fit(train)
+//val cvModel = cv.fit(train)
+val lm = lr.fit(train)
 
 //obtenemos el mejor modelo
-val lm = cvModel.bestModel.asInstanceOf[LinearRegressionModel]
+//val lm = cvModel.bestModel.asInstanceOf[LinearRegressionModel]
 
 println(s"RegParam: ${lm.getRegParam}")
 println(s"ElasticNetParam: ${lm.getElasticNetParam}")
@@ -170,7 +175,7 @@ for((f,fi) <- feature_cols.zipWithIndex){
 }
 
 val coeficientesDF = sc.parallelize(coeficientes).toDF("Variable","Valor","Coeficiente") //con
-coeficientesDF.write.csv("./coefs/3")
+coeficientesDF.write.csv("./coefs/"+EXPNUM)
 
 //Resto de métricas:
 val sum = lm.summary
