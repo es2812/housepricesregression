@@ -191,7 +191,7 @@ while( numVariables <= variablesSeleccionables.length ){
       mejormodelo_local = lm
     }
   }
-  //Tras el bucle por todos los atirbutos, mejorR2_local contiene el mejor R2 encontrado para 
+  //Tras el bucle por todos los atributos, mejorR2_local contiene el mejor R2 encontrado para 
   //esta ronda de atributos a añadir, y mejorvariable_local la variable que proporciona el mejor R2
   //Sin embargo también queremos comprobar si añadir la mejor de estas variables mejora el R2 actual de manera significativa
   
@@ -217,9 +217,102 @@ println(s"Variables:")
 in_definitivo_names.foreach(println)
 println(s"R2: ${mejorR2_global}")
 
+/*
+ *  FORWARD SELECTION CON INTERACCIÓN:
+ *    Partiendo del mejor modelo encontrado en la anterior fase:
+ */
+
+val in_definitivo_indexes = Array("Overall Qual", "Neighborhood_index", "Gr Liv Area", "MS SubClass_index", "Bsmt Full Bath", "Exter Qual_index", "Bsmt Exposure_index", "Overall Cond", "Garage Cars", "Bsmt Qual_index", "Fireplaces", "Land Contour_index", "Exterior 1st_index", "Kitchen Qual_index", "Garage Qual_index", "Screen Porch", "Year Built", "Garage Cond_index", "Condition 1_index", "Bsmt Unf SF")
+val in_definitivo_features = Array("Overall Qual", "Neighborhood_ohe", "Gr Liv Area", "MS SubClass_ohe", "Bsmt Full Bath", "Exter Qual_ohe", "Bsmt Exposure_ohe", "Overall Cond", "Garage Cars", "Bsmt Qual_ohe", "Fireplaces", "Land Contour_ohe", "Exterior 1st_ohe", "Kitchen Qual_ohe", "Garage Qual_ohe", "Screen Porch", "Year Built", "Garage Cond_ohe", "Condition 1_ohe", "Bsmt Unf SF")
+
+
+var mejorR2_local = -99.9
+var r2_local = -99.9
+var mejorR2_global = 0.8635196161004577
+
 val combinaciones = for {
-    (x, idX) <- in_definitivo_features.zipWithIndex
-    (y, idxY) <- in_definitivo_features.zipWithIndex
+    (x, idX) <- in_definitivo_indexes.zipWithIndex
+    (y, idxY) <- in_definitivo_indexes.zipWithIndex
     if idX < idxY
 } yield (x,y)
 
+var dataCombined = dataTransformed
+//preparación de los valores:
+for((i,j) <- combinaciones){
+  dataCombined = dataCombined.withColumn(i+"*"+j,col(i)*col(j))
+}
+
+val combinaciones_nombres = combinaciones.map((x)=>x._1+"*"+x._2)
+
+var in_aux_comb:Array[String] = Array()
+var in_definitivo_comb = in_definitivo_features
+
+var mejorcombinacion_local= ""
+var mejormodelo_local:LinearRegressionModel = null
+var mejormodelo:LinearRegressionModel = null
+
+var numCombinaciones = 1
+
+breakable{
+while( numCombinaciones <= combinaciones_nombres.length ){
+  mejorR2_local = -99.9 //reiniciamos el máximo R2 local
+  println(s"Eligiendo la ${numCombinaciones} combinacion del modelo")
+
+  for(combinacion <- combinaciones_nombres.diff(in_definitivo_comb)){
+    println(s"Comprobando ${combinacion}.")
+
+    in_aux_comb = in_definitivo_comb ++ Array(combinacion)
+
+    var va = new VectorAssembler().setInputCols(in_aux_comb).setOutputCol("features")
+
+    var featureDF = va.transform(dataCombined)
+
+    //Separamos datos en train y test
+    var split = featureDF.randomSplit(Array(0.66,0.34), SEED)
+    var train = split(0)
+    var test = split(1)
+
+    var lr = new LinearRegression()
+    lr.setFeaturesCol("features")
+    lr.setLabelCol("SalePrice")
+
+    //fit con el set de entrenamiento
+    var lm = lr.fit(train)
+
+    var residuals = lm.transform(test).select("SalePrice","prediction")
+
+    var eval = new RegressionEvaluator()
+    eval.setLabelCol("SalePrice")
+    eval.setMetricName("r2")
+  
+    r2_local = eval.evaluate(residuals)
+    println(s"R2: ${r2_local}")
+    if(r2_local > mejorR2_local){
+      mejorR2_local = r2_local
+      
+      mejorcombinacion_local = combinacion
+
+      mejormodelo_local = lm
+    }
+  }
+  
+  if(mejorR2_local - mejorR2_global > 0.001){
+    
+    println(s"R2 ${mejorR2_global} -> ${mejorR2_local}")
+    println(s"Elegida ${mejorcombinacion_local}")
+
+    mejorR2_global = mejorR2_local
+    in_definitivo_comb = in_definitivo_comb ++ Array(mejorcombinacion_local)
+    mejormodelo = mejormodelo_local
+  }
+  else{
+    break
+  }
+  numCombinaciones = numCombinaciones+1
+}
+}
+
+println("Fin de forward selection interacciones")
+println(s"Variables:")
+in_definitivo_comb.foreach(println)
+println(s"R2: ${mejorR2_global}")
