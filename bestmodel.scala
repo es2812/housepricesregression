@@ -101,16 +101,22 @@ val feature_cols = output_ohe++NUMATTR++Array("Gr Liv Area*Land Contour", "Gr Li
 val va = new VectorAssembler().setInputCols(feature_cols).setOutputCol("features")
 
 val dataTransformed = va.transform(dataOhe)
+/* 
+ * Tranformación de Y
+ */
+
+val dataTransformed2 = dataTransformed.withColumn("SalePrice_t",log(col("SalePrice")))
 
 //Separamos datos en train y test
-val split = dataTransformed.randomSplit(Array(0.66,0.34), SEED)
+val split = dataTransformed2.randomSplit(Array(0.66,0.34), SEED)
 val train = split(0)
 val test = split(1)
+
 
 //Modelo de regresión lineal:
 val lr = new LinearRegression()
 lr.setFeaturesCol("features")
-lr.setLabelCol("SalePrice")
+lr.setLabelCol("SalePrice_t")
 val lm = lr.fit(train)
 
 println(s"Intercept: ${lm.intercept}")
@@ -150,7 +156,7 @@ for((f,fi) <- feature_cols.zipWithIndex){
 }
 
 val coeficientesDF = sc.parallelize(coeficientes).toDF("Variable","Valor","Coeficiente") //con
-coeficientesDF.write.csv("./coefs/forwardselection")
+coeficientesDF.write.csv("./coefs/forwardselection2")
 
 //Resto de métricas:
 val sum = lm.summary
@@ -160,13 +166,13 @@ println(s"RMSE: ${sum.rootMeanSquaredError}")
 println(s"R2: ${sum.r2}")
 println(s"R2 ajustado: ${sum.r2adj}")
 
-val residuals = lm.transform(test).select($"SalePrice",$"prediction",$"SalePrice"-$"prediction")
-residuals.write.csv("./residuals")
-lm.save("model/forwardselectionfinal")
+val residuals = lm.transform(test).select($"SalePrice_t",$"prediction",$"SalePrice"-$"prediction")
+residuals.write.csv("./residuals_transformed")
+lm.save("model/forwardselectionfinal_transformed")
 
 import org.apache.spark.ml.evaluation.RegressionEvaluator 
 val eval = new RegressionEvaluator()
-eval.setLabelCol("SalePrice")
+eval.setLabelCol("SalePrice_t")
 println("SUMMARY TEST")
 eval.setMetricName("mse")
 print(s"MSE: ${eval.evaluate(residuals)}")
