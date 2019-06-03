@@ -302,4 +302,10 @@
 	
 	R2 test final: 0.863. R2 training: 0.9050394329070544. R2 ajustado training: 0.899614619590042
 
-2. 
+2. Forward elección interacciones.
+	1. 0.8635196161004577 -> 0.8790824697694338
+		Elegida Gr Liv Area\*Land Contour_index
+	2. Proceso abortado por el servidor tras 5 horas: 
+		Mejor opción hasta el momento: Gr Liv Area\*Exterior 1st_index.
+			R2: 0.8829212569058443    
+
