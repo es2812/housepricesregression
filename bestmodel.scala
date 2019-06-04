@@ -166,7 +166,7 @@ println(s"RMSE: ${sum.rootMeanSquaredError}")
 println(s"R2: ${sum.r2}")
 println(s"R2 ajustado: ${sum.r2adj}")
 
-val residuals = lm.transform(test).select($"SalePrice_t",$"prediction",$"SalePrice"-$"prediction")
+val residuals = lm.transform(test).select($"SalePrice_t",$"prediction",$"SalePrice_t"-$"prediction")
 residuals.write.csv("./residuals_transformed")
 lm.save("model/forwardselectionfinal_transformed")
 
