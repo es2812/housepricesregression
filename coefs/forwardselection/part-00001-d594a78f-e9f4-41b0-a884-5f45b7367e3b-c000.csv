@@ -1,0 +1,59 @@
+Exterior 1st_ohe,VinylSd,-54725.8447629674
+Exterior 1st_ohe,MetalSd,-46713.55700620113
+Exterior 1st_ohe,HdBoard,-47352.06502434475
+Exterior 1st_ohe,Wd Sdng,-42107.5660651638
+Exterior 1st_ohe,Plywood,-37076.703892878664
+Exterior 1st_ohe,CemntBd,-25696.99923186352
+Exterior 1st_ohe,BrkFace,-10595.49557397527
+Exterior 1st_ohe,WdShing,-31573.55597108646
+Exterior 1st_ohe,AsbShng,-20555.951699942725
+Exterior 1st_ohe,Stucco,-13331.104749189511
+Exterior 1st_ohe,BrkComm,-14194.812290378646
+Exterior 1st_ohe,CBlock,9717.0562131115
+Exterior 1st_ohe,AsphShn,12762.765010688892
+Exterior 1st_ohe,Stone,7005.829734436491
+Exterior 1st_ohe,PreCast,87186.02117250595
+Exterior 1st_ohe,ImStucc,3320.235006593498
+Exter Qual_ohe,TA,3320.235006593498
+Exter Qual_ohe,Gd,6981.304893721045
+Exter Qual_ohe,Ex,29923.291573045382
+Exter Qual_ohe,Fa,-1423.3720011432233
+Bsmt Qual_ohe,TA,-1423.3720011432233
+Bsmt Qual_ohe,Gd,-2909.7097372265575
+Bsmt Qual_ohe,Ex,17225.484357555655
+Bsmt Qual_ohe,Fa,-1984.0822372328478
+Bsmt Qual_ohe,No Basement,-21424.22650830076
+Bsmt Qual_ohe,Po,-5071.409590917803
+Bsmt Exposure_ohe,No,-5071.409590917803
+Bsmt Exposure_ohe,Av,4929.458153147823
+Bsmt Exposure_ohe,Gd,17038.20057045022
+Bsmt Exposure_ohe,Mn,-5139.59289001735
+Bsmt Exposure_ohe,No Basement,-4504.682855906736
+Kitchen Qual_ohe,TA,-4504.682855906736
+Kitchen Qual_ohe,Gd,-506.5836333391571
+Kitchen Qual_ohe,Ex,21776.979106130166
+Kitchen Qual_ohe,Fa,-2270.2116922207233
+Kitchen Qual_ohe,Po,-110855.99766326362
+Garage Qual_ohe,TA,-110855.99766326362
+Garage Qual_ohe,No Garage,-1891.7694289251112
+Garage Qual_ohe,Fa,-110083.74117661134
+Garage Qual_ohe,Gd,-82525.23017219904
+Garage Qual_ohe,Po,-95480.96130932368
+Garage Qual_ohe,Ex,97841.15354943671
+Garage Cond_ohe,TA,97841.15354943671
+Garage Cond_ohe,No Garage,-1891.7694289251112
+Garage Cond_ohe,Fa,98116.76691269214
+Garage Cond_ohe,Gd,85443.51935724325
+Garage Cond_ohe,Po,77107.63685985343
+Garage Cond_ohe,Ex,8557.798885369117
+Overall Qual,"",8557.798885369117
+Gr Liv Area,"",77.60001481643799
+Bsmt Full Bath,"",9751.319297174074
+Overall Cond,"",5831.960528821473
+Garage Cars,"",9520.397753324956
+Fireplaces,"",3637.658230561525
+Screen Porch,"",54.09572530199038
+Year Built,"",-478.48043083500806
+Bsmt Unf SF,"",-8.131860178674488
+Gr Liv Area*Land Contour,"",-23.615482074044465
+Gr Liv Area*Exterior 1st,"",-3.240979055253966

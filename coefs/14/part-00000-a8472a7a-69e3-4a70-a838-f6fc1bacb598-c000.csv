@@ -1,0 +1,157 @@
+Intercept,"",-334222.9625648774
+MS SubClass_ohe,20,-265.47764046588253
+MS SubClass_ohe,60,1981.3483470238843
+MS SubClass_ohe,50,8502.806321754777
+MS SubClass_ohe,120,-8001.169073598672
+MS SubClass_ohe,30,5066.421278215813
+MS SubClass_ohe,160,-9357.075514568804
+MS SubClass_ohe,70,9607.410210825203
+MS SubClass_ohe,80,-16448.71257610344
+MS SubClass_ohe,90,-5024.030328296894
+MS SubClass_ohe,190,4406.5194039684675
+MS SubClass_ohe,85,-4701.414041014389
+MS SubClass_ohe,75,-8454.905096382292
+MS SubClass_ohe,45,9522.273841071135
+MS SubClass_ohe,180,-10208.32889741686
+MS SubClass_ohe,40,-1910.4987194573896
+MS SubClass_ohe,150,8191.366322437137
+MS Zoning_ohe,RL,8191.366322437137
+MS Zoning_ohe,RM,320.3045546490366
+MS Zoning_ohe,FV,-3289.5900804268294
+MS Zoning_ohe,RH,10866.706267579077
+MS Zoning_ohe,C (all),-11857.093706293836
+MS Zoning_ohe,I (all),0.0
+MS Zoning_ohe,A (agr),-708.8735698102446
+Alley_ohe,No Alley,-708.8735698102446
+Alley_ohe,Grvl,-3436.7479683982892
+Alley_ohe,Pave,-359.55303898525534
+Lot Shape_ohe,Reg,-359.55303898525534
+Lot Shape_ohe,IR1,-51.72104666867302
+Lot Shape_ohe,IR2,810.0374310473459
+Lot Shape_ohe,IR3,12251.174005725597
+Land Contour_ohe,Lvl,12251.174005725597
+Land Contour_ohe,HLS,19449.460700224932
+Land Contour_ohe,Bnk,7486.346667046705
+Land Contour_ohe,Low,-828.7018262359302
+Lot Config_ohe,Inside,-828.7018262359302
+Lot Config_ohe,Corner,-293.68415200036713
+Lot Config_ohe,CulDSac,3296.4522137385657
+Lot Config_ohe,FR2,-5282.5479661609
+Lot Config_ohe,FR3,35241.30449418442
+Land Slope_ohe,Gtl,35241.30449418442
+Land Slope_ohe,Mod,38688.0820990366
+Land Slope_ohe,Sev,-6416.68458949951
+Neighborhood_ohe,NAmes,-6416.68458949951
+Neighborhood_ohe,CollgCr,-3326.9588918817913
+Neighborhood_ohe,OldTown,-5712.58599989492
+Neighborhood_ohe,Edwards,-8461.662932913932
+Neighborhood_ohe,Somerst,22475.866572746436
+Neighborhood_ohe,NridgHt,24041.28732999809
+Neighborhood_ohe,Gilbert,-6004.063771982876
+Neighborhood_ohe,Sawyer,-1257.4366972271312
+Neighborhood_ohe,NWAmes,-8937.107211334898
+Neighborhood_ohe,SawyerW,-5372.221413549399
+Neighborhood_ohe,Mitchel,-9455.801558406765
+Neighborhood_ohe,BrkSide,2164.2120395255765
+Neighborhood_ohe,Crawfor,11125.103829593065
+Neighborhood_ohe,IDOTRR,-238.02056727397309
+Neighborhood_ohe,NoRidge,26626.154831713025
+Neighborhood_ohe,Timber,-4339.676568344871
+Neighborhood_ohe,StoneBr,30192.996804562234
+Neighborhood_ohe,SWISU,-3150.1663427736503
+Neighborhood_ohe,ClearCr,1748.1634549103774
+Neighborhood_ohe,MeadowV,10014.815394030238
+Neighborhood_ohe,BrDale,25391.143362172683
+Neighborhood_ohe,Blmngtn,7369.8706038440005
+Neighborhood_ohe,Veenker,2991.757570162218
+Neighborhood_ohe,NPkVill,18458.272207040067
+Neighborhood_ohe,Blueste,17354.821830573645
+Neighborhood_ohe,Greens,7121.255910863304
+Neighborhood_ohe,GrnHill,0.0
+Neighborhood_ohe,Landmrk,4719.861481053841
+Condition 1_ohe,Norm,4719.861481053841
+Condition 1_ohe,Feedr,-5742.256494025698
+Condition 1_ohe,Artery,-7015.99023992946
+Condition 1_ohe,RRAn,-2378.0447125207043
+Condition 1_ohe,PosN,5556.045641888878
+Condition 1_ohe,RRAe,-7509.542212862474
+Condition 1_ohe,PosA,5104.824844707512
+Condition 1_ohe,RRNn,-16399.54754409092
+Condition 1_ohe,RRNe,10900.021573861055
+Bldg Type_ohe,1Fam,10900.021573861055
+Bldg Type_ohe,TwnhsE,-2266.5897073875594
+Bldg Type_ohe,Duplex,-5024.030328296894
+Bldg Type_ohe,Twnhs,-13143.728024101783
+Bldg Type_ohe,2fmCon,11471.888924921706
+House Style_ohe,1Story,11471.888924921706
+House Style_ohe,2Story,-4485.0493685380425
+House Style_ohe,1.5Fin,-3835.912862757992
+House Style_ohe,SLvl,21711.31143308985
+House Style_ohe,SFoyer,12223.248189425385
+House Style_ohe,2.5Unf,7503.250066768175
+House Style_ohe,1.5Unf,2176.566170098681
+House Style_ohe,2.5Fin,1988.4817577163242
+Roof Style_ohe,Gable,1988.4817577163242
+Roof Style_ohe,Hip,2376.9645024273013
+Roof Style_ohe,Gambrel,-2487.1649928085035
+Roof Style_ohe,Flat,-6607.577087381376
+Roof Style_ohe,Mansard,4786.816696877882
+Roof Style_ohe,Shed,-430.5540576046044
+Exterior 1st_ohe,VinylSd,-430.5540576046044
+Exterior 1st_ohe,MetalSd,4200.311597319897
+Exterior 1st_ohe,HdBoard,-1425.9704678591747
+Exterior 1st_ohe,Wd Sdng,3659.7544941935025
+Exterior 1st_ohe,Plywood,-163.67734819507274
+Exterior 1st_ohe,CemntBd,-804.6641091362563
+Exterior 1st_ohe,BrkFace,19222.4237584794
+Exterior 1st_ohe,WdShing,-2719.206222191657
+Exterior 1st_ohe,AsbShng,4805.166813616858
+Exterior 1st_ohe,Stucco,460.53194547462573
+Exterior 1st_ohe,BrkComm,9285.085772197594
+Exterior 1st_ohe,CBlock,-212.38386323849932
+Exterior 1st_ohe,AsphShn,0.0
+Exterior 1st_ohe,Stone,-20161.622911500548
+Exterior 1st_ohe,PreCast,52332.27369532707
+Exterior 1st_ohe,ImStucc,2741.3982755978336
+Exterior 2nd_ohe,VinylSd,2741.3982755978336
+Exterior 2nd_ohe,MetalSd,162.8128287110001
+Exterior 2nd_ohe,HdBoard,147.93124083995892
+Exterior 2nd_ohe,Wd Sdng,-1531.1427041187053
+Exterior 2nd_ohe,Plywood,-2284.157959391058
+Exterior 2nd_ohe,CmentBd,4903.335130291246
+Exterior 2nd_ohe,Wd Shng,4783.769906732645
+Exterior 2nd_ohe,Stucco,-1201.236109169361
+Exterior 2nd_ohe,BrkFace,-10606.90528959743
+Exterior 2nd_ohe,AsbShng,-9340.992872710505
+Exterior 2nd_ohe,Brk Cmn,-306.2157537159701
+Exterior 2nd_ohe,ImStucc,4139.652537024566
+Exterior 2nd_ohe,Stone,-1801.2149039004964
+Exterior 2nd_ohe,AsphShn,-3211.469709212278
+Exterior 2nd_ohe,CBlock,-212.38386323849932
+Exterior 2nd_ohe,Other,-10662.928789950472
+Exterior 2nd_ohe,PreCast,5468.679097137128
+Mas Vnr Type_ohe,None,5468.679097137128
+Mas Vnr Type_ohe,BrkFace,516.1579132845014
+Mas Vnr Type_ohe,Stone,3788.8329219287657
+Mas Vnr Type_ohe,BrkCmn,-1343.2705788605997
+Mas Vnr Type_ohe,CBlock,-7.498306318476228
+Exter Qual_ohe,TA,-7.498306318476228
+Exter Qual_ohe,Gd,541.1036471005934
+Exter Qual_ohe,Ex,22932.634757854557
+Exter Qual_ohe,Fa,4095.5120302656683
+Exter Cond_ohe,TA,4095.5120302656683
+Exter Cond_ohe,Gd,2277.290217269703
+Exter Cond_ohe,Fa,5541.936534811628
+Exter Cond_ohe,Ex,6786.333562062873
+Exter Cond_ohe,Po,1016.6991879083861
+Foundation_ohe,PConc,1016.6991879083861
+Foundation_ohe,CBlock,-1176.1639366476631
+Foundation_ohe,BrkTil,1572.405618255036
+Foundation_ohe,Slab,-501.8196590528543
+Foundation_ohe,Stone,17840.749160284908
+Foundation_ohe,Wood,-804.7681088072976
+Bsmt Qual_ohe,TA,-804.7681088072976
+Bsmt Qual_ohe,Gd,-4990.34819818415
+Bsmt Qual_ohe,Ex,11775.529033709376
+Bsmt Qual_ohe,Fa,4143.33963218502
+Bsmt Qual_ohe,No Basement,2404.523087196044

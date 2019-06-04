@@ -1,0 +1,58 @@
+Intercept,"",11.09975074349096
+MS SubClass_ohe,20,0.5595241518909768
+MS SubClass_ohe,60,0.4659961061551921
+MS SubClass_ohe,50,0.5587364105152361
+MS SubClass_ohe,120,0.46990865090126743
+MS SubClass_ohe,30,0.5034972984579431
+MS SubClass_ohe,160,0.31706644455963023
+MS SubClass_ohe,70,0.5697014305646995
+MS SubClass_ohe,80,0.4971970052469565
+MS SubClass_ohe,90,0.4699323838131357
+MS SubClass_ohe,190,0.530197867825464
+MS SubClass_ohe,85,0.5284780280839237
+MS SubClass_ohe,75,0.6252775863392627
+MS SubClass_ohe,45,0.5802016574248673
+MS SubClass_ohe,180,0.3658673522402945
+MS SubClass_ohe,40,0.5137976382060438
+MS SubClass_ohe,150,-0.3360547203945936
+Land Contour_ohe,Lvl,-0.3360547203945936
+Land Contour_ohe,HLS,-0.18734754719761187
+Land Contour_ohe,Bnk,-0.16117955459447902
+Land Contour_ohe,Low,-0.08731160850202305
+Neighborhood_ohe,NAmes,-0.08731160850202305
+Neighborhood_ohe,CollgCr,-0.05393961726517797
+Neighborhood_ohe,OldTown,-0.15958698413328365
+Neighborhood_ohe,Edwards,-0.1468898861703784
+Neighborhood_ohe,Somerst,0.03662780890725812
+Neighborhood_ohe,NridgHt,0.05417162984761137
+Neighborhood_ohe,Gilbert,-0.05403476229295244
+Neighborhood_ohe,Sawyer,-0.059093287615984987
+Neighborhood_ohe,NWAmes,-0.0758056868836033
+Neighborhood_ohe,SawyerW,-0.05359084456888461
+Neighborhood_ohe,Mitchel,-0.06603695848584178
+Neighborhood_ohe,BrkSide,-0.12196709749336242
+Neighborhood_ohe,Crawfor,0.02938539231061127
+Neighborhood_ohe,IDOTRR,-0.21734276541841466
+Neighborhood_ohe,NoRidge,0.007393232306611698
+Neighborhood_ohe,Timber,-0.03129041206354235
+Neighborhood_ohe,StoneBr,0.08331418430487371
+Neighborhood_ohe,SWISU,-0.10757754111929425
+Neighborhood_ohe,ClearCr,0.07396404383261025
+Neighborhood_ohe,MeadowV,-0.21605243985643455
+Neighborhood_ohe,BrDale,-0.10563764500554619
+Neighborhood_ohe,Blmngtn,-0.06502680082861818
+Neighborhood_ohe,Veenker,0.036944119255168835
+Neighborhood_ohe,NPkVill,-0.02547113929348638
+Neighborhood_ohe,Blueste,-0.0777597300734576
+Neighborhood_ohe,Greens,-0.04208313661119816
+Neighborhood_ohe,GrnHill,0.4264315249297176
+Neighborhood_ohe,Landmrk,0.046648152565406734
+Condition 1_ohe,Norm,0.046648152565406734
+Condition 1_ohe,Feedr,-0.02500635430880039
+Condition 1_ohe,Artery,-0.016174591009834035
+Condition 1_ohe,RRAn,0.016053730453215575
+Condition 1_ohe,PosN,0.06321548237490934
+Condition 1_ohe,RRAe,-0.06588504990644721
+Condition 1_ohe,PosA,0.05611019436601954
+Condition 1_ohe,RRNn,-0.05215919966192712
+Condition 1_ohe,RRNe,-0.34409160110668574
